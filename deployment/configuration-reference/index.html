@@ -1,0 +1,521 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-dopiot4a"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Configuration reference | Nexus</title><link rel="canonical" href="https://q2devland.github.io/nexus-docs/deployment/configuration-reference/"/><link rel="sitemap" href="/nexus-docs/sitemap-index.xml"/><link rel="icon" href="/nexus-docs/favicon.ico" sizes="32x32"/><link rel="shortcut icon" href="/nexus-docs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v7.4.2"/><meta name="generator" content="Starlight v0.42.6"/><meta property="og:title" content="Configuration reference"/><meta property="og:type" content="article"/><meta property="og:url" content="https://q2devland.github.io/nexus-docs/deployment/configuration-reference/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Every NEXUS_* environment variable Nexus reads, with its default and what it does: the server, secrets and sessions, sign-in, email, Files, the cache, security, Webhooks, the Read model, Repeaters and Extensions."/><meta property="og:site_name" content="Nexus"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Every NEXUS_* environment variable Nexus reads, with its default and what it does: the server, secrets and sessions, sign-in, email, Files, the cache, security, Webhooks, the Read model, Repeaters and Extensions."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/nexus-docs/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/nexus-docs/_astro/middleware.DjZ2zC5a.css"><script type="module" src="/nexus-docs/_astro/page.cNngjUgL.js"></script></head><body class="astro-dopiot4a"><a class="sl-skip-link astro-coctwdnt" href="#_top">Skip to content</a><div class="page sl-flex astro-mf4dsnst"><header class="header astro-mf4dsnst"><div class="header astro-seza2a4k"><div class="title-wrapper sl-flex astro-seza2a4k"><a href="/nexus-docs/" class="site-title sl-flex astro-dlqzpr46"><img class="light:sl-hidden print:hidden astro-dlqzpr46" alt src="/nexus-docs/_astro/nexus-mark-dark.CS6UtYN6.svg" width="64" height="64"><img class="dark:sl-hidden print:block astro-dlqzpr46" alt src="/nexus-docs/_astro/nexus-mark.D_KMzNsj.svg" width="64" height="64"><span class="astro-dlqzpr46" translate="no">Nexus</span></a></div><div class="sl-flex print:hidden astro-seza2a4k"><site-search class="astro-seza2a4k astro-z5l5e5hp" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}"><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-z5l5e5hp"><svg aria-hidden="true" class="astro-z5l5e5hp astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-z5l5e5hp" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-z5l5e5hp" style="display: none;"><kbd class="astro-z5l5e5hp">Ctrl</kbd><kbd class="astro-z5l5e5hp">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-z5l5e5hp"><div class="dialog-frame sl-flex astro-z5l5e5hp"><button data-close-modal class="sl-flex md:sl-hidden astro-z5l5e5hp">Cancel</button><div class="search-container astro-z5l5e5hp"><div id="starlight__search" class="astro-z5l5e5hp"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/nexus-docs/_astro/Search.astro_astro_type_script_index_0_lang.DlbZlKo3.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-seza2a4k"><div class="sl-flex social-icons astro-seza2a4k"><a href="mailto:nexus@q2devland.com" rel="me" class="sl-flex astro-e4vxmo6j"><span class="sr-only astro-e4vxmo6j">Contact</span><svg aria-hidden="true" class="astro-e4vxmo6j astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M19 4H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-.41 2-5.88 5.88a1 1 0 0 1-1.42 0L5.41 6ZM20 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7.41l5.88 5.88a3 3 0 0 0 4.24 0L20 7.41Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-rn5nbybh"><span class="sr-only astro-rn5nbybh">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-rn5nbybh astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-rn5nbybh"><option value="dark" class="astro-rn5nbybh">Dark</option><option value="light" class="astro-rn5nbybh">Light</option><option value="auto" selected class="astro-rn5nbybh">Auto</option></select><svg aria-hidden="true" class="icon caret astro-rn5nbybh astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-mf4dsnst" aria-label="Main"><button popovertarget="starlight__sidebar" class="sl-menu-button sl-flex md:sl-hidden print:hidden astro-cfhbkuwr"><svg aria-hidden="true" class="open-menu astro-cfhbkuwr astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-cfhbkuwr astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg><span class="sr-only astro-cfhbkuwr">Menu</span></button><script type="module">var e=class extends HTMLElement{constructor(){super();let e=matchMedia(`(min-width: 50em)`),t=()=>{this.popover=e.matches?null:`auto`};t(),e.addEventListener(`change`,()=>t()),this.addEventListener(`toggle`,({newState:e})=>this.trapFocus(e===`open`))}trapFocus(e){document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}};customElements.define(`sl-sidebar-pane`,e);</script><sl-sidebar-pane popover id="starlight__sidebar" class="sidebar-pane astro-mf4dsnst"><div class="sidebar-content sl-flex astro-mf4dsnst"><sl-sidebar-state-persist data-hash="1123qqm" class="astro-mvyomxsl"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-36bt6rsg"><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Getting started</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/what-is-nexus/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">What is Nexus</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/key-concepts/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Key concepts</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/reelhouse-demo/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">The Reelhouse demo</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/tour/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">A tour of the app</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/project-settings/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Project settings</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/getting-started/glossary/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Glossary</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Data model</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/collections/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Collections</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/fields/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Fields</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/data-types/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Data types</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/field-functions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Field functions</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/interfaces/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Interfaces</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/repeaters/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Repeaters</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/image-urls/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Image URLs</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/video-keys/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Video keys</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/field-layout/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Field layout</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/field-conditions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Field conditions</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/relations/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Relations</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/junction-collections/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Junction collections</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/translations/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Translations</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/navigation-tree/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Navigation tree</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/preview-urls/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Preview URLs</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/data-model/model-snapshots/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Model snapshots</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Content</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/content/list-views/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">List views</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/saved-views/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Saved views</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/item-view/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Item view</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/editing-relations/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Editing relations</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/translating-items/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Translating Items</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/history/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">History</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/previewing/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Previewing</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/content/running-actions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Running Actions</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Files</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/files/file-library/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">File library</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/files/file-folders/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">File folders</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/files/file-and-image-fields/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">File and Image Fields</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/files/replacing-files/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Replacing Files</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Users</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/users/users/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Users</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/users/invitations/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Invitations</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/users/api-users-and-tokens/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">API users and API tokens</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/users/profile/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Profile</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Roles and permissions</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/roles-and-permissions/roles/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Roles and the Admin role</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/roles-and-permissions/collection-permissions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Collection permissions</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/roles-and-permissions/field-permissions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Field permissions</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/roles-and-permissions/file-folder-permissions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">File folder permissions</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/roles-and-permissions/sharing-saved-views/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Sharing Saved views</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Authentication</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="6"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/authentication/how-sign-in-works/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">How sign-in works</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/authentication/identity-providers/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Identity providers</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/authentication/first-admin/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">The first admin</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Automation</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="7"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/automation/webhooks/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Webhooks</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/automation/delivery-log/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Delivery log</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/automation/actions/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Actions</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Read model</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="8"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/overview/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Overview</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/choosing-whats-published/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Choosing what&#39;s published</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/entries/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Entries</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/querying/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Querying</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/including-relations/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Including relations</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/nexus-content-client/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">nexus-content client</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/read-model/rebuilds-and-queue/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Rebuilds and the queue</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">API</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="9"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/api/overview/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Overview</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/api/authentication/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Authentication</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/api/items-api/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Items API</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/api/filtering-and-sorting/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Filtering and sorting</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/api/openapi/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">OpenAPI</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/api/errors-and-limits/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Errors and limits</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Extensions</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="10"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/overview/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Overview</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/writing-an-extension/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Writing an Extension</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/write-hooks/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Write hooks</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/read-hooks/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Read hooks</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/action-handlers/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Action handlers</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/hook-context/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">The hook context</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/configuration/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Configuration</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/extensions/example-cinema-demo/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Example: cinema-demo</span></a></li></ul></details></li><li class="astro-36bt6rsg"><details open class="astro-36bt6rsg"><summary class="astro-36bt6rsg"><span class="group-label astro-36bt6rsg"><span class="large astro-36bt6rsg">Deployment</span></span><svg aria-hidden="true" class="caret astro-36bt6rsg astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="11"></sl-sidebar-restore><ul class="astro-36bt6rsg"><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/docker-image/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Docker image</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/docker-compose/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Docker Compose</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/configuration-reference/" aria-current="page" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Configuration reference</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/database/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Database</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/file-storage/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">File storage</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/email/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Email</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/cache/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Cache</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/health-checks/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Health checks</span></a></li><li class="astro-36bt6rsg"><a href="/nexus-docs/deployment/upgrading/" class="astro-36bt6rsg"><span class="astro-36bt6rsg">Upgrading</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-3qq34mq2"><div class="social-icons astro-3qq34mq2"><a href="mailto:nexus@q2devland.com" rel="me" class="sl-flex astro-e4vxmo6j"><span class="sr-only astro-e4vxmo6j">Contact</span><svg aria-hidden="true" class="astro-e4vxmo6j astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M19 4H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-.41 2-5.88 5.88a1 1 0 0 1-1.42 0L5.41 6ZM20 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7.41l5.88 5.88a3 3 0 0 0 4.24 0L20 7.41Z"/></svg></a></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-rn5nbybh"><span class="sr-only astro-rn5nbybh">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-rn5nbybh astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-rn5nbybh"><option value="dark" class="astro-rn5nbybh">Dark</option><option value="light" class="astro-rn5nbybh">Light</option><option value="auto" selected class="astro-rn5nbybh">Auto</option></select><svg aria-hidden="true" class="icon caret astro-rn5nbybh astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script></div></div></div></sl-sidebar-pane></nav><div class="main-frame astro-mf4dsnst"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-wghckasc"><aside class="right-sidebar-container print:hidden astro-wghckasc"><div class="right-sidebar astro-wghckasc"><div class="lg:sl-hidden astro-iwh3lha2"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-xr34mzka"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-xr34mzka"><details id="starlight__mobile-toc" class="astro-xr34mzka"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-xr34mzka"><span class="toggle sl-flex astro-xr34mzka">On this page<svg aria-hidden="true" class="caret astro-xr34mzka astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-xr34mzka"></span></summary><div class="dropdown astro-xr34mzka"><ul class="isMobile astro-eutxynk6" style="--depth: 0;"><li style="--depth: 0;" class="astro-eutxynk6"><a href="#_top" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Overview</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#the-server" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">The server</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#secrets-and-sessions" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Secrets and sessions</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#sign-in" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Sign-in</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#email" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Email</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#files" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Files</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#cache" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Cache</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#security" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Security</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#webhooks" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Webhooks</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#read-model" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Read model</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#repeaters" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Repeaters</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#extensions" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Extensions</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/nexus-docs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C3fM4Kra.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-iwh3lha2"><div class="sl-container astro-iwh3lha2"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-eutxynk6" style="--depth: 0;"><li style="--depth: 0;" class="astro-eutxynk6"><a href="#_top" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Overview</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#the-server" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">The server</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#secrets-and-sessions" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Secrets and sessions</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#sign-in" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Sign-in</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#email" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Email</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#files" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Files</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#cache" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Cache</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#security" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Security</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#webhooks" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Webhooks</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#read-model" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Read model</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#repeaters" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Repeaters</span></a></li><li style="--depth: 0;" class="astro-eutxynk6"><a href="#extensions" style="--depth: 0;" class="astro-eutxynk6"><span style="--depth: 0;" class="astro-eutxynk6">Extensions</span></a></li></ul></nav></starlight-toc><script type="module" src="/nexus-docs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.BpJaGz7G.js"></script></div></div></div></aside><div class="main-pane astro-wghckasc"><main data-pagefind-body class="astro-dopiot4a" lang="en" dir="ltr"><div class="content-panel astro-hiukfpmt"><div class="sl-container astro-hiukfpmt"><h1 id="_top" class="astro-otegoqmh">Configuration reference</h1></div></div><div class="content-panel astro-hiukfpmt"><div class="sl-container astro-hiukfpmt"><div class="sl-markdown-content"><p>Everything a deployment configures is an environment variable of Nexus’s container, read once, as Nexus starts: changing one is restarting Nexus with it. None is kept in the database, and none is shown anywhere, in Settings or the API. The rest, from the data model to the Project’s name and branding, admins set in Nexus itself.</p>
+<p>A value Nexus can’t use stops it from starting, with an error that names the variable and says what it takes, such as <em>NEXUS_JWT_SECRET is required, at least 32 characters long</em>. A variable that’s set but empty is as good as unset.</p>
+<p>Some take values of a kind:</p>
+<ul>
+<li><strong>A duration</strong> is a whole number and a unit, without a space: <code dir="auto">s</code>, <code dir="auto">m</code>, <code dir="auto">h</code> or <code dir="auto">d</code>, such as <code dir="auto">90s</code>, <code dir="auto">15m</code>, <code dir="auto">12h</code> or <code dir="auto">30d</code>. The Read model’s take <code dir="auto">ms</code>, <code dir="auto">s</code> or <code dir="auto">m</code>, such as <code dir="auto">500ms</code>.</li>
+<li><strong>A size</strong> is a number of bytes, or of <code dir="auto">KB</code>, <code dir="auto">MB</code> or <code dir="auto">GB</code> of 1024, such as <code dir="auto">500KB</code>, <code dir="auto">50MB</code> or <code dir="auto">2GB</code>.</li>
+<li><strong>A list</strong> is its items between commas, such as <code dir="auto">https://www.reelhouse.example,https://app.reelhouse.example</code>.</li>
+</ul>
+<p>The <a href="../docker-image/">Docker image</a> sets four of them itself, which the <em>Default</em> column says: <code dir="auto">NEXUS_PORT</code>, <code dir="auto">NEXUS_WEB_ROOT</code>, <code dir="auto">NEXUS_DOCS_ROOT</code> and <code dir="auto">NEXUS_STORAGE_PATH</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="the-server">The server</h2><a class="sl-anchor-link" href="#the-server"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “The server”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_DATABASE_URL</code></td>
+<td>Required.</td>
+<td>The PostgreSQL database, as <code dir="auto">postgres://user:password@host:5432/database</code>, with the password’s special characters percent-encoded. See <a href="../database/">Database</a>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_PORT</code></td>
+<td><code dir="auto">3000</code></td>
+<td>The port Nexus listens on, for the web app, the API and the documentation alike.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_WEB_ROOT</code></td>
+<td><code dir="auto">/app/web</code> in the image; unset, none.</td>
+<td>The folder of the compiled web app, which Nexus serves beside the API. Unset, it serves only the API, under <code dir="auto">/api</code>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_DOCS_ROOT</code></td>
+<td><code dir="auto">/app/docs</code> in the image; unset, none.</td>
+<td>The folder of this documentation, as the image builds it for its version, which Nexus serves under <code dir="auto">/docs</code> to anyone, signed in or not. Unset, there is no <code dir="auto">/docs</code>, and the web app’s link to the documentation opens the latest, on <code dir="auto">q2devland.github.io/nexus-docs</code>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_PUBLIC_URL</code></td>
+<td>Each request’s own.</td>
+<td>Where people reach Nexus, such as <code dir="auto">https://cms.reelhouse.example</code>: the address Identity providers send them back to, and Invitations link to. Unset, it’s the address each request came to, as a proxy on a private network forwards it; set it when the proxy that ends TLS is anywhere else.</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="secrets-and-sessions">Secrets and sessions</h2><a class="sl-anchor-link" href="#secrets-and-sessions"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Secrets and sessions”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_JWT_SECRET</code></td>
+<td>Required.</td>
+<td>Signs the access tokens Nexus gives the web app, at least 32 characters, its own for each Project. Changing it signs no one out: the web app asks its session for new tokens, and only a sign-in under way starts again.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_ENCRYPTION_KEY</code></td>
+<td><code dir="auto">NEXUS_JWT_SECRET</code></td>
+<td>Encrypts the secrets Nexus keeps and reads back, such as <a href="../../automation/webhooks/">Webhooks</a>’ signing secrets and secret headers, at least 32 characters. Changing it loses them, until admins give them again; set it apart from <code dir="auto">NEXUS_JWT_SECRET</code> to change that one freely.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_ACCESS_TOKEN_LIFETIME</code></td>
+<td><code dir="auto">15m</code></td>
+<td>A duration: how long an access token of the web app works. Its session gives it a new one before then.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_REFRESH_TOKEN_LIFETIME</code></td>
+<td><code dir="auto">30d</code></td>
+<td>A duration: how long a session lasts once someone signs in, before they sign in again.</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="sign-in">Sign-in</h2><a class="sl-anchor-link" href="#sign-in"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Sign-in”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_BOOTSTRAP_ADMIN_EMAIL</code></td>
+<td>None.</td>
+<td>Who becomes the first User, with the Admin role, as Nexus starts on an empty Project. Ignored once the Project has Users. See <a href="../../authentication/first-admin/">The first admin</a>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_IDENTITY_PROVIDERS</code></td>
+<td>None: nobody can sign in.</td>
+<td>A list of the Identity providers people sign in with, by names of your choosing, in the order the sign-in page offers them. Each is configured by the variables below; one configured but not listed is disabled.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GOOGLE_&lt;NAME&gt;_CLIENT_ID</code></td>
+<td>Required for a Google provider.</td>
+<td>Its OAuth client’s ID, <code dir="auto">&lt;NAME&gt;</code> being the provider’s name in upper case.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GOOGLE_&lt;NAME&gt;_CLIENT_SECRET</code></td>
+<td>Required for a Google provider.</td>
+<td>Its OAuth client’s secret.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_MICROSOFT_&lt;NAME&gt;_CLIENT_ID</code></td>
+<td>Required for a Microsoft provider.</td>
+<td>Its app registration’s application (client) ID.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_MICROSOFT_&lt;NAME&gt;_CLIENT_SECRET</code></td>
+<td>Required for a Microsoft provider.</td>
+<td>Its client secret’s value.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_MICROSOFT_&lt;NAME&gt;_TENANT</code></td>
+<td><code dir="auto">common</code></td>
+<td>Whose accounts sign in: a tenant’s ID or domain, <code dir="auto">organizations</code>, <code dir="auto">consumers</code> or <code dir="auto">common</code>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GOOGLE_&lt;NAME&gt;_ISSUER</code>, <code dir="auto">NEXUS_MICROSOFT_&lt;NAME&gt;_ISSUER</code></td>
+<td>Google’s, or the tenant’s at Microsoft.</td>
+<td>Another issuer for the provider, replacing its own: only for testing, with a fake identity issuer such as the Reelhouse demo’s.</td>
+</tr>
+</tbody>
+</table>
+<p><code dir="auto">NEXUS_GOOGLE_CLIENT_ID</code>, <code dir="auto">NEXUS_GOOGLE_CLIENT_SECRET</code> and <code dir="auto">NEXUS_GOOGLE_ISSUER</code>, without a provider’s name, as Nexus once read them, stop it from starting: name the provider in <code dir="auto">NEXUS_IDENTITY_PROVIDERS</code> and move them under that name. See <a href="../../authentication/identity-providers/">Identity providers</a>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="email">Email</h2><a class="sl-anchor-link" href="#email"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Email”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_SMTP_URL</code></td>
+<td>None: no Invitation can be sent.</td>
+<td>The SMTP server Invitations are sent through, as <code dir="auto">smtp://host:587</code>, upgraded to TLS when the server offers it, or <code dir="auto">smtps://host:465</code>, with the user and password in it if it needs them.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_SMTP_FROM</code></td>
+<td>Required with <code dir="auto">NEXUS_SMTP_URL</code>.</td>
+<td>The address mail comes from, alone or as <code dir="auto">Name &lt;address&gt;</code>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_INVITATION_LIFETIME</code></td>
+<td><code dir="auto">7d</code></td>
+<td>A duration: how long an Invitation’s link works.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../email/">Email</a>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="files">Files</h2><a class="sl-anchor-link" href="#files"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Files”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_STORAGE</code></td>
+<td><code dir="auto">local</code></td>
+<td>Where Files are kept: <code dir="auto">local</code>, <code dir="auto">s3</code>, <code dir="auto">azure</code> or <code dir="auto">gcs</code>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_STORAGE_PATH</code></td>
+<td><code dir="auto">/data/files</code> in the image; unset, <code dir="auto">storage</code> in the working directory.</td>
+<td><code dir="auto">local</code>: the folder they’re kept in.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_S3_BUCKET</code></td>
+<td>Required for <code dir="auto">s3</code>.</td>
+<td>The bucket, which must exist.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_S3_REGION</code></td>
+<td>The AWS SDK’s own, such as <code dir="auto">AWS_REGION</code>; <code dir="auto">us-east-1</code> with <code dir="auto">NEXUS_S3_ENDPOINT</code>.</td>
+<td>Its region.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_S3_ACCESS_KEY_ID</code></td>
+<td>The AWS SDK’s own credentials.</td>
+<td>An access key, with <code dir="auto">NEXUS_S3_SECRET_ACCESS_KEY</code>: both or neither.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_S3_SECRET_ACCESS_KEY</code></td>
+<td>The AWS SDK’s own credentials.</td>
+<td>Its secret.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_S3_ENDPOINT</code></td>
+<td>AWS.</td>
+<td>Another service that speaks S3, such as MinIO or Cloudflare R2, addressed by path.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_AZURE_CONNECTION_STRING</code></td>
+<td>Required for <code dir="auto">azure</code>.</td>
+<td>The Azure Storage account’s connection string.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_AZURE_CONTAINER</code></td>
+<td>Required for <code dir="auto">azure</code>.</td>
+<td>The container, which must exist.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GCS_BUCKET</code></td>
+<td>Required for <code dir="auto">gcs</code>.</td>
+<td>The bucket, which must exist.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GCS_KEY_FILE</code></td>
+<td>Application Default Credentials.</td>
+<td>The path of a service account’s JSON key.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_GCS_ENDPOINT</code></td>
+<td>Google’s.</td>
+<td>Another API that speaks GCS’s, such as an emulator, called without credentials unless a key file is given.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_UPLOAD_MAX_SIZE</code></td>
+<td><code dir="auto">50MB</code></td>
+<td>A size: the largest File anyone may upload. A <a href="../../files/file-and-image-fields/">File or Image Field</a> may take smaller ones only.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../file-storage/">File storage</a>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="cache">Cache</h2><a class="sl-anchor-link" href="#cache"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Cache”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_REDIS_URL</code></td>
+<td>None: the model is read from the database on every request.</td>
+<td>The Redis the data model is kept in, shared by every instance of the Project, as <code dir="auto">redis://host:6379</code> or <code dir="auto">rediss://host:6380</code>, with the user and password in it if it needs them. A Project running several instances needs it to have a cache.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_REDIS_TIMEOUT_MS</code></td>
+<td><code dir="auto">50</code></td>
+<td>Milliseconds Redis may take to answer before the database does, from 1.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_MODEL_CACHE_TTL_SECONDS</code></td>
+<td><code dir="auto">86400</code></td>
+<td>Seconds Redis keeps what it was told of the model, from 1.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../cache/">Cache</a>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="security">Security</h2><a class="sl-anchor-link" href="#security"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Security”</span></a></div>
+<p>Every Project starts with secure defaults; these override them, only when needed.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_CORS_ORIGINS</code></td>
+<td>None: only the web app.</td>
+<td>A list of the origins of other websites whose pages may call the API with an <a href="../../users/api-users-and-tokens/">API token</a>, or <code dir="auto">*</code> for any. Cookies are never sent from them.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_PREVIEW_ORIGINS</code></td>
+<td>None.</td>
+<td>A list of the origins the Item view may show <a href="../../data-model/preview-urls/">previews</a> from, in a frame: the <code dir="auto">frame-src</code> of the Content-Security-Policy.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_IMAGE_ORIGINS</code></td>
+<td>None.</td>
+<td>A list of the origins the app may show <a href="../../data-model/image-urls/">Image URLs</a> and their URL previews from, and <a href="../../data-model/video-keys/">Video keys</a>’ thumbnails, added to the <code dir="auto">img-src</code> of the Content-Security-Policy.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_VIDEO_ORIGINS</code></td>
+<td>None.</td>
+<td>A list of the origins the app may play <a href="../../data-model/video-keys/">Video keys</a> from, in a frame: added to the <code dir="auto">frame-src</code> of the Content-Security-Policy, with the preview origins.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_RATE_LIMIT</code></td>
+<td><code dir="auto">3000/1m</code></td>
+<td>How many API requests each client address may make in a window, a duration, such as <code dir="auto">1000/1m</code>, or <code dir="auto">off</code>. Each replica counts its own. The address is the one a proxy on a private network forwards, so such a proxy must overwrite <code dir="auto">X-Forwarded-For</code>. See <a href="../../api/errors-and-limits/">Errors and limits</a>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_HEADER_&lt;NAME&gt;</code></td>
+<td>Nexus’s headers.</td>
+<td>Sets the response header <code dir="auto">&lt;NAME&gt;</code>, its underscores read as hyphens, replacing Nexus’s or adding one; <code dir="auto">off</code> drops it. <code dir="auto">NEXUS_HEADER_REFERRER_POLICY=strict-origin-when-cross-origin</code> sets Referrer-Policy.</td>
+</tr>
+</tbody>
+</table>
+<p>Nexus sends with every response:</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content-Security-Policy</td>
+<td><code dir="auto">default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'</code>, with <code dir="auto">frame-src</code> the preview and video origins, if any, and the image origins added to <code dir="auto">img-src</code></td>
+</tr>
+<tr>
+<td>Strict-Transport-Security</td>
+<td><code dir="auto">max-age=31536000</code></td>
+</tr>
+<tr>
+<td>X-Content-Type-Options</td>
+<td><code dir="auto">nosniff</code></td>
+</tr>
+<tr>
+<td>X-Frame-Options</td>
+<td><code dir="auto">DENY</code></td>
+</tr>
+<tr>
+<td>Referrer-Policy</td>
+<td><code dir="auto">no-referrer</code></td>
+</tr>
+<tr>
+<td>Cross-Origin-Opener-Policy</td>
+<td><code dir="auto">same-origin</code></td>
+</tr>
+<tr>
+<td>Cross-Origin-Resource-Policy</td>
+<td><code dir="auto">same-origin</code></td>
+</tr>
+</tbody>
+</table>
+<p><code dir="auto">NEXUS_HEADER_CONTENT_SECURITY_POLICY</code> replaces the whole policy, and can’t be set with <code dir="auto">NEXUS_PREVIEW_ORIGINS</code>, <code dir="auto">NEXUS_VIDEO_ORIGINS</code> or <code dir="auto">NEXUS_IMAGE_ORIGINS</code>: add the origins to its <code dir="auto">frame-src</code> or <code dir="auto">img-src</code> instead.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="webhooks">Webhooks</h2><a class="sl-anchor-link" href="#webhooks"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Webhooks”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_WEBHOOK_TIMEOUT</code></td>
+<td><code dir="auto">10s</code></td>
+<td>A duration: how long a call of a <a href="../../automation/webhooks/">Webhook</a> may take before it fails.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_WEBHOOK_RETRY_DELAY</code></td>
+<td><code dir="auto">30s</code></td>
+<td>A duration: how long the first retry of a failed call waits, each next one waiting twice as long.</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="read-model">Read model</h2><a class="sl-anchor-link" href="#read-model"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Read model”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_READ_MODEL_INTERVAL</code></td>
+<td><code dir="auto">2s</code></td>
+<td>A duration in <code dir="auto">ms</code>, <code dir="auto">s</code> or <code dir="auto">m</code>: how often each replica rebuilds the Items queued. See <a href="../../read-model/rebuilds-and-queue/">Rebuilds and the queue</a>.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_READ_MODEL_INCLUDE_DEPTH</code></td>
+<td><code dir="auto">10</code></td>
+<td>How many levels of related Items a query may <a href="../../read-model/including-relations/">include</a>, from 1.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_READ_MODEL_TRIES</code></td>
+<td><code dir="auto">5</code></td>
+<td>How many times an Item whose rebuild fails is tried before it’s listed as failed, from 1.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_READ_MODEL_RETRY_DELAY</code></td>
+<td><code dir="auto">10s</code></td>
+<td>A duration in <code dir="auto">ms</code>, <code dir="auto">s</code> or <code dir="auto">m</code>: how long the first retry of a failed rebuild waits, each next one waiting twice as long.</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="repeaters">Repeaters</h2><a class="sl-anchor-link" href="#repeaters"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Repeaters”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_REPEATER_ROWS_MAX</code></td>
+<td><code dir="auto">500</code></td>
+<td>The most Rows any <a href="../../data-model/repeaters/">Repeater</a> holds, whatever its own maximum, from 1.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_REPEATER_FIELDS_MAX</code></td>
+<td><code dir="auto">50</code></td>
+<td>The most Repeater fields a Repeater has, from 1.</td>
+</tr>
+</tbody>
+</table>
+<p>Lowering either breaks nothing: a Repeater that holds more keeps it, and only grows no more.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="extensions">Extensions</h2><a class="sl-anchor-link" href="#extensions"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Extensions”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NEXUS_EXTENSIONS</code></td>
+<td>None.</td>
+<td>A list of the folders of the <a href="../../extensions/overview/">Extensions</a> to load, relative to the working directory, <code dir="auto">/app</code> in the image, unless absolute, in the order their Extension hooks run.</td>
+</tr>
+<tr>
+<td><code dir="auto">NEXUS_EXTENSION_&lt;NAME&gt;_&lt;SETTING&gt;</code></td>
+<td>None.</td>
+<td>An Extension’s own setting, <code dir="auto">&lt;NAME&gt;</code> its name in upper case with <code dir="auto">_</code> for <code dir="auto">-</code>, which reaches it as <code dir="auto">config.&lt;SETTING&gt;</code>. See <a href="../../extensions/configuration/">Configuration</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>→ <a href="../docker-image/">Docker image</a> · <a href="../docker-compose/">Docker Compose</a> · <a href="../file-storage/">File storage</a> · <a href="../email/">Email</a> · <a href="../cache/">Cache</a></p>
+</div><footer class="sl-flex astro-ypzknoj6"><div class="meta sl-flex astro-ypzknoj6"></div><div class="pagination-links print:hidden astro-prc3peog" dir="ltr"><a href="/nexus-docs/deployment/docker-compose/" rel="prev" class="astro-prc3peog"><svg aria-hidden="true" class="astro-prc3peog astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-prc3peog">Previous<br class="astro-prc3peog"><span class="link-title astro-prc3peog">Docker Compose</span></span></a><a href="/nexus-docs/deployment/database/" rel="next" class="astro-prc3peog"><svg aria-hidden="true" class="astro-prc3peog astro-mvzpa35d" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-prc3peog">Next<br class="astro-prc3peog"><span class="link-title astro-prc3peog">Database</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
